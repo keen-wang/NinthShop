@@ -1,30 +1,21 @@
-<template>
-  <div class="footer_guide">
-    <span class="guide_item" :class="{on: '/msite'===$route.path}" @click="goTo('/msite')">
-      <span class="item_icon">
-        <i class="iconfont icon-waimai"></i>
-      </span>
-      <span>外卖</span>
-    </span>
-    <a href="javascript:;" class="guide_item" :class="{on: '/search'===$route.path}" @click="goTo('/search')">
-      <span class="item_icon">
-        <i class="iconfont icon-search"></i>
-      </span>
-      <span>搜索</span>
-    </a>
-    <a href="javascript:;" class="guide_item" :class="{on: '/order'===$route.path}" @click="goTo('/order')">
-      <span class="item_icon">
-        <i class="iconfont icon-dingdan"></i>
-      </span>
-      <span>订单</span>
-    </a>
-    <a href="javascript:;" class="guide_item" :class="{on: '/profile'===$route.path}" @click="goTo('/profile')">
-      <span class="item_icon">
-        <i class="iconfont icon-geren"></i>
-      </span>
-      <span>我的</span>
-    </a>
-  </div>
+<template lang="pug">
+.footer_guide
+  span.guide_item(:class="{on: '/msite'===$route.path}", @click="goTo('/msite')")
+    span.item_icon
+      i.iconfont.icon-home
+    span 首页
+  span.guide_item(:class="{on: '/search'===$route.path}", @click="goTo('/search')")
+    span.item_icon
+      i.iconfont.icon-search
+    span 搜索
+  span.guide_item(:class="{on: '/order'===$route.path}", @click="goTo('/order')")
+    span.item_icon
+      i.iconfont.icon-order
+    span 订单
+  span.guide_item(:class="{on: '/profile'===$route.path}", @click="goTo('/profile')")
+    span.item_icon
+      i.iconfont.icon-profile
+    span 我的
 </template>
 
 <script>
@@ -65,7 +56,7 @@ export default {
       flex-direction: column
       align-items: center
       margin: 5px
-      color #999999
+      color: #555
       &.on
         color: #02a774
       span

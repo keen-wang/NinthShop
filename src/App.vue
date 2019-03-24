@@ -1,6 +1,5 @@
 <template lang='pug'>
 .app-wrapper
-  h1 新零售
   router-view.router_view
   FooterGuide.footer_guide
 </template>
@@ -24,8 +23,8 @@ export default {
 .app-wrapper
   width: 100%
   height: 100%
-  display: flex
-  flex-direction: column
-  .router_view
-    flex: 1
+  background: #f5f5f5
+  .footer_guide
+    position: fixed
+    bottom: 0
 </style>
