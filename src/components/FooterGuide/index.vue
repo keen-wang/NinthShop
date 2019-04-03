@@ -1,10 +1,10 @@
 <template lang="pug">
 .footer_guide
-  span.guide_item(:class="{on: '/msite'===$route.path}", @click="goTo('/msite')")
+  span.guide_item(:class="{on: '/home'===$route.path}", @click="goTo('/home')")
     span.item_icon
       i.iconfont.icon-home
     span 首页
-  span.guide_item(:class="{on: '/search'===$route.path}", @click="goTo('/search')")
+  //- span.guide_item(:class="{on: '/search'===$route.path}", @click="goTo('/search')")
     span.item_icon
       i.iconfont.icon-search
     span 搜索

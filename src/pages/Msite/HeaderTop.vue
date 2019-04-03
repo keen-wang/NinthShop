@@ -1,8 +1,6 @@
 <template lang='pug'>
 .header-wrap
-  slot(name='left')
   .header_title_text.ellipsis {{title}}
-  slot(name='right')
 </template>
 
 <script>

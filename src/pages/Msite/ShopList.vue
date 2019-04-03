@@ -1,6 +1,6 @@
 <template lang='pug'>
 .shoplist-wrap
-  .shop-title -店铺列表-
+  .shop-title -推荐商家-
   .shop-info(v-for="item in 10")
     img.shop-head(src="https://fuss10.elemecdn.com/7/d8/a867c870b22bc74c87c348b75528djpeg.jpeg?imageMogr/format/webp/thumbnail/!90x90r/gravity/Center/crop/90x90/")
     .shop-content
@@ -49,6 +49,7 @@ export default {
   color: #666
   .shop-title
     text-align: center
+    padding-top: 10px
   .shop-info
     display: flex
     border-bottom: 1px solid #dfdfdf
@@ -57,6 +58,7 @@ export default {
       flex: 1
     .shop-content
       flex: 3
+      padding: 6px
       .shop-name
         padding: 5px 0
       .shop-sales
