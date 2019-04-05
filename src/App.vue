@@ -1,6 +1,5 @@
 <template lang='pug'>
 .app-wrapper
-  span {{$route.path}}
   router-view.router_view
   FooterGuide.footer_guide(
     v-if="mainPages.includes($route.path)")
