@@ -1,36 +1,45 @@
 <template lang='pug'>
 .login-wrap
-  .login-header
-    img.img-logo(src='./app-logo.png', alt='')
-  cube-tab-bar(
-    v-model="activeTab"
-    :data="tabs"
-    @change="changeTab")
-  cube-button(@click="showDialog") show dialog
+  .login-frame
+    .login-header
+      img.img-logo(src='./app-logo.png', alt='')
+    cube-tab-bar.tab-bar(
+      v-model="activeTab"
+      :data="tabs"
+      :showSlider="true"
+      :useTransition="true"
+      @change="changeTab")
+    FormRegister(v-if="activeTab==='register'")
+    FormLogin(v-else)
 </template>
 
 <script>
-/** */
+/**
+*@name  登录页面 */
+import FormLogin from './FormLogin'
+import FormRegister from './FormRegister'
 export default {
-  name: '',
+  name: 'Login',
+  components: {
+    FormLogin,
+    FormRegister
+  },
   data () {
     return {
-      activeTab: '密码登录',
-      tabs: [{
-        label: '密码登录'
-      }, {
-        label: '注册账号'
-      }]
+      // tab选项卡
+      activeTab: 'login',
+      tabs: [
+        {
+          label: '密码登录',
+          value: 'login'
+        }, {
+          label: '注册账号',
+          value: 'register'
+        }
+      ]
     }
   },
   methods: {
-    showDialog () {
-      this.$createDialog({
-        type: 'alert',
-        title: 'Alert',
-        content: 'dialog content'
-      }).show()
-    },
     changeTab (label) {
       console.log(this.activeTab, label)
     }
@@ -40,14 +49,23 @@ export default {
 
 <style lang='sass' scoped>
 .login-wrap
-  width: 350px
-  height: 417px
-  padding: 40px
-  .login-header
+  width: 100%
+  height: 100%
+  background: #fff
+  .login-frame
     width: 100%
-    margin-top: 20px
-    margin-bottom: 30px
-    img
-      width: 290px
-      display: block
+    max-width: 350px
+    padding: 40px 0
+    margin: auto
+    .login-header
+      width: 100%
+      margin-top: 20px
+      margin-bottom: 30px
+      img
+        width: 100%
+        max-width: 290px
+        display: block
+        margin: auto
+  .tab-bar
+    margin-bottom: 20px
 </style>
