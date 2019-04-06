@@ -1,6 +1,6 @@
 import axios from 'axios'
 import moment from 'moment'
-import { Message } from 'element-ui'
+import {showPopup} from '../common/alert'
 // 修改默认请求配置
 axios.defaults.baseURL = '/api'
 axios.defaults.headers.common['Access-AppId'] = 'web'
@@ -45,20 +45,23 @@ export function fetch (props) {
       if (response.data.code === 0) {
         return response.data.data || response.data
       } else if (response.data.code === 6) {
-        Message({
-          type: 'error',
-          showClose: true,
-          duration: 8000,
-          message: response.data.data.map(item => {
-            return `${item.code}:${item.message}`
-          }).join('\n\r')
-        })
+        // Message({
+        //   type: 'error',
+        //   showClose: true,
+        //   duration: 8000,
+        //   message: response.data.data.map(item => {
+        //     return `${item.code}:${item.message}`
+        //   }).join('\n\r')
+        // })
+        showPopup(response.data.data.map(item => {
+          return `${item.code}:${item.message}`
+        }).join('\n\r'), 'error')
         return false
       } else {
         throw Object({
           response: {
             status: response.data.code,
-            statusText: response.data.message
+            statusText: response.data.msg
           }
         })
       }
@@ -69,11 +72,12 @@ export function fetch (props) {
       if (status === 401 || status === 403) {
         window.location.href = '/#/login'
       } else {
-        Message({
-          type: 'error',
-          showClose: true,
-          message: status + ':' + statusText
-        })
+        // Message({
+        //   type: 'error',
+        //   showClose: true,
+        //   message: status + ':' + statusText
+        // })
+        showPopup(status + ' : ' + statusText, 'error')
       }
     }
     return false
