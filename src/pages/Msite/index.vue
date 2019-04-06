@@ -30,11 +30,6 @@ export default {
     }
   },
   mounted () {
-    this.$get({
-      url: `/aaaaaa`
-    }).then(data => {
-      console.log('jhhhhh', data)
-    })
   }
 }
 </script>

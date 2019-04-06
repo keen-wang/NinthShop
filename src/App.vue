@@ -17,6 +17,11 @@ export default {
     return {
       mainPages: ['/home', '/order', '/profile']
     }
+  },
+  mounted () {
+    this.$store.dispatch('getAddress')
+    this.$store.dispatch('getShopTypes')
+    this.$store.dispatch('getShops')
   }
 }
 </script>

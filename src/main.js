@@ -13,7 +13,7 @@ Vue.config.devtools = true
 new Vue({
   el: '#app',
   render: h => h(App),
-  router,
+  router, // Vue-router
   store // 所有的组件对象多了一个属性: $store
   // components: {
   //   App

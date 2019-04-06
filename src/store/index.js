@@ -3,21 +3,13 @@
  */
 import Vue from 'vue'
 import Vuex from 'vuex'
+import state from './state'
+import mutations from './mutations'
+import actions from './actions'
+import getters from './getters'
 
 Vue.use(Vuex)
 
-const state = {
-
-}
-const mutations = {
-
-}
-const actions = {
-
-}
-const getters = {
-
-}
 export default new Vuex.Store({
   state, // 状态对象
   mutations, // 包含多个更新state函数的对象
