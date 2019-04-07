@@ -5,6 +5,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Msite from '../pages/Msite'
 import Order from '../pages/Order'
+import Profile from '../pages/Profile'
 import Login from '../pages/Login'
 // 声明使用插件
 Vue.use(VueRouter)
@@ -19,6 +20,10 @@ export default new VueRouter({
     {
       path: '/order',
       component: Order
+    },
+    {
+      path: '/profile',
+      component: Profile
     },
     {
       path: '/login',

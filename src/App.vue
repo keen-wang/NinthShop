@@ -20,8 +20,9 @@ export default {
   },
   mounted () {
     this.$store.dispatch('getAddress')
-    this.$store.dispatch('getShopTypes')
-    this.$store.dispatch('getShops')
+    this.$store.dispatch('getUserinfo')
+    // this.$store.dispatch('getShopTypes')
+    // this.$store.dispatch('getShops')
   }
 }
 </script>

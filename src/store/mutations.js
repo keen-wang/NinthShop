@@ -4,10 +4,14 @@
 import {
   RECEIVE_ADDRESS,
   RECEIVE_SHOPTYPES,
-  RECEIVE_SHOPS
+  RECEIVE_SHOPS,
+  RECEIVE_USERINFO
 } from './mutation-types'
 
 export default {
+  [RECEIVE_USERINFO] (state, {userinfo}) {
+    state.userinfo = userinfo
+  },
   [RECEIVE_ADDRESS] (state, {address}) {
     state.address = address
   },

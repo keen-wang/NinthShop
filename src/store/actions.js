@@ -4,11 +4,25 @@
 import {
   RECEIVE_ADDRESS,
   RECEIVE_SHOPTYPES,
-  RECEIVE_SHOPS
+  RECEIVE_SHOPS,
+  RECEIVE_USERINFO
 } from './mutation-types'
 import { httpGet } from '../api'
 
 export default{
+  recordUser ({commit, state}, userinfo) {
+    commit(RECEIVE_USERINFO, {userinfo})
+  },
+  async getUserinfo ({commit, state}) {
+    await httpGet({
+      url: '/userinfo'
+    }).then(res => {
+      if (!res) return
+      console.log('shoptypes', res)
+      const userinfo = res
+      commit(RECEIVE_USERINFO, {userinfo})
+    })
+  },
   getAddress ({commit, state}) {
     // const geahash = state.latitudu + ',' + state.longitude
     const address = '蜜汁地址'

@@ -80,7 +80,10 @@ export default {
           password: this.model.password
         }
       }).then(data => {
+        if (!data) return
         console.log(data)
+        this.$store.dispatch('recordUser', data)
+        this.$router.replace('/profile')
       })
     },
     resetHandler (e) {
