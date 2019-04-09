@@ -93,7 +93,9 @@ export default {
           type: 'user'
         }
       }).then(data => {
-        console.log('注册结果', data)
+        if (!data) return
+        this.$store.dispatch('recordUser', data)
+        this.$router.replace('/profile')
       })
     },
     resetHandler (e) {
