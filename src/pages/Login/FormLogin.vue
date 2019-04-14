@@ -13,6 +13,7 @@ cube-form.form-login(
 /**
 * @name 登录表单
  */
+import { mapActions } from 'vuex'
 export default {
   name: 'FormLogin',
   data () {
@@ -65,6 +66,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['receiveUserinfo', 'recordUser']),
     validateHandler (result) {
       this.validity = result.validity
       this.valid = result.valid
@@ -82,7 +84,8 @@ export default {
       }).then(data => {
         if (!data) return
         console.log(data)
-        this.$store.dispatch('recordUser', data)
+        this.recordUser(data)
+        this.receiveUserinfo()
         this.$router.replace('/profile')
       })
     },
