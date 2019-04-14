@@ -1,5 +1,7 @@
 <template lang='pug'>
-.profile-wrap 666{{userinfo.userid||'请先登录'}}
+.profile-wrap
+  ProfileHeader(:userinfo='userinfo')
+//-  666{{userinfo.userid||'请先登录'}}
 </template>
 
 <script>
@@ -7,10 +9,15 @@
  * @name 个人主页
  */
 import { mapState } from 'vuex'
+import ProfileHeader from './ProfileHeader'
 export default {
   name: 'profile',
+  components: {
+    ProfileHeader
+  },
   data () {
-    return {}
+    return {
+    }
   },
   computed: {
     ...mapState(['userinfo'])
@@ -19,5 +26,9 @@ export default {
 </script>
 
 <style lang='sass' scoped>
-
+.profile-wrap
+  width: 100%
+  height: calc(100% - 50px)
+  background: #dfdfdf
+  overflow: auto
 </style>
