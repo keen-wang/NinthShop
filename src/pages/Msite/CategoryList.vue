@@ -3,7 +3,7 @@
 cube-slide.category-wrap(
   ref='slide'
   :data='shoptypeGroups'
-  :auto-play="false")
+  :auto-play="true")
   cube-slide-item(
     v-for='(group, index) in shoptypeGroups'
     :key='index')

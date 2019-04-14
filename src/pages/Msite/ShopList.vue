@@ -1,18 +1,19 @@
 <template lang='pug'>
 .shoplist-wrap
   .shop-title -推荐商家-
-  .shop-info(v-for="item in 10")
-    img.shop-head(src="https://fuss10.elemecdn.com/7/d8/a867c870b22bc74c87c348b75528djpeg.jpeg?imageMogr/format/webp/thumbnail/!90x90r/gravity/Center/crop/90x90/")
+  .shop-info(v-for="item in shopList")
+    img.shop-head(:src="item.imgsrc")
     .shop-content
-      .shop-name 麦丹劳炸鸡汉堡
+      .shop-name {{item.name}}
       .shop-sales
-        .graded
-          i.full-star.iconfont.icon-full_star(v-for="star in stars[0]")
-          i.half-star.iconfont.icon-half_star(v-for="star in stars[1]")
-          i.blank-star.iconfont.icon-blank_star(v-for="star in stars[2]")
-          span.graded-num 3.5
+        span.graded
+          i.full-star.iconfont.icon-full_star(v-for="star in item.stars[0]")
+          i.half-star.iconfont.icon-half_star(v-for="star in item.stars[1]")
+          i.blank-star.iconfont.icon-blank_star(v-for="star in item.stars[2]")
+          span.graded-num {{item.grade}}
+        span.sales 月销{{item.sales}}单
       .shop-price
-        span.starting-price ￥100起送
+        span.starting-price ￥{{item.startprice}}起送
         span |
         span.distribution-costs 配送费￥5
 </template>
@@ -21,6 +22,7 @@
 /**
  * @name ShopList
  */
+import {mapState, mapActions} from 'vuex'
 export default {
   name: 'ShopList',
   data () {
@@ -28,7 +30,19 @@ export default {
       stars: []
     }
   },
+  computed: {
+    ...mapState(['shops']),
+    shopList () {
+      return this.shops.map(item => {
+        return {
+          ...item,
+          stars: this.getStarNum(item.grade)
+        }
+      })
+    }
+  },
   methods: {
+    ...mapActions(['getShops']),
     getStarNum: (num) => {
       let arr = []
       arr[0] = parseInt(num)
@@ -39,6 +53,7 @@ export default {
   },
   mounted () {
     this.stars = this.getStarNum(3.5)
+    this.getShops()
   }
 }
 </script>
@@ -51,23 +66,31 @@ export default {
     text-align: center
     padding-top: 10px
   .shop-info
-    display: flex
     border-bottom: 1px solid #dfdfdf
-    padding: 10px
+    padding: 5px
     .shop-head
-      flex: 1
+      width: 25vw
+      display: inline-block
+      vertical-align: middle
     .shop-content
-      flex: 3
+      width: 50vw
       padding: 6px
+      display: inline-block
+      vertical-align: middle
       .shop-name
-        padding: 5px 0
+        padding: 1.5vw 0
+        font-size: 4vw
       .shop-sales
-        padding: 5px 0
+        padding: 1.5vw 0
+        font-size: 3.2vw
         .graded
           color: #ffbe00
+          margin-right: 10px
           .graded-num
             color: #777
+          .graded-num, i
+            font-size: 3.2vw
       .shop-price
-        padding: 5px 0
-        font-size: 14px
+        padding: 1.5vw 0
+        font-size: 3.2vw
 </style>
