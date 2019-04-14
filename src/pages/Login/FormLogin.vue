@@ -66,7 +66,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['receiveUserinfo', 'recordUser']),
+    ...mapActions(['getUserinfo', 'recordUser']),
     validateHandler (result) {
       this.validity = result.validity
       this.valid = result.valid
@@ -85,7 +85,7 @@ export default {
         if (!data) return
         console.log(data)
         this.recordUser(data)
-        this.receiveUserinfo()
+        this.getUserinfo()
         this.$router.replace('/profile')
       })
     },

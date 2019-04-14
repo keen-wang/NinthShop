@@ -5,13 +5,22 @@ import {
   RECEIVE_ADDRESS,
   RECEIVE_SHOPTYPES,
   RECEIVE_SHOPS,
-  RECEIVE_USERINFO
+  RECEIVE_USERINFO,
+  RESET_USERINFO
 } from './mutation-types'
 import { httpGet } from '../api'
 
 export default{
   recordUser ({commit, state}, userinfo) {
     commit(RECEIVE_USERINFO, {userinfo})
+  },
+  async logout ({commit, state}) {
+    await httpGet({
+      url: '/userinfo/logout'
+    }).then(res => {
+      if (!res) return
+      commit(RESET_USERINFO)
+    })
   },
   async getUserinfo ({commit, state}) {
     await httpGet({

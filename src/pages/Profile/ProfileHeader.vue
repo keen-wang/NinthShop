@@ -40,7 +40,7 @@ export default {
   },
   filters: {
     moneny (val) {
-      return '￥' + val.toFixed(2) || '0.00'
+      return '￥' + ((val || val === 0) ? val.toFixed(2) : '-')
     }
   }
 }
@@ -79,6 +79,7 @@ export default {
     background-color: #fff
     text-align: center
     line-height: 50px
+    border-bottom: 1px solid #ddd
     .balance-label
       color: #555
       font-size: 5vw

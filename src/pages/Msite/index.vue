@@ -58,7 +58,7 @@ export default {
 .msite-wrap
   width: 100%
   height: calc(100% - 50px)
-  background: #dfdfdf
+  background: #f5f5f5
   overflow: hidden
   display: flex
   flex-direction: column
