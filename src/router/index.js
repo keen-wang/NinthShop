@@ -7,6 +7,7 @@ import Msite from '../pages/Msite'
 import Order from '../pages/Order'
 import Profile from '../pages/Profile'
 import Login from '../pages/Login'
+import AddressManager from '../pages/Profile/AddressManager'
 // 声明使用插件
 Vue.use(VueRouter)
 
@@ -23,7 +24,17 @@ export default new VueRouter({
     },
     {
       path: '/profile',
-      component: Profile
+      component: Profile,
+      children: [
+        {
+          path: 'address',
+          component: AddressManager
+        },
+        {
+          path: '',
+          component: Profile
+        }
+      ]
     },
     {
       path: '/login',

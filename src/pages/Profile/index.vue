@@ -1,18 +1,24 @@
 <template lang='pug'>
-.profile-wrap
+.profile-wrap(v-if="!hasChildRoute")
   ProfileHeader(:userinfo='userinfo')
   .menu-wrap(v-if="userinfo.username")
     ul.menu-list
-      li.menu-item(v-for="item in usermenu")
+      li.menu-item(
+        v-for="item in usermenu"
+        :key="item.icon"
+        @click="changePath(item.path)")
         i.iconfont(:class="'icon-'+item.icon")
         span {{item.label}}
     ul.menu-list
-      li.menu-item(v-for="item in systemmenu")
+      li.menu-item(
+        v-for="item in systemmenu"
+        :key="item.icon")
         i.iconfont(:class="'icon-'+item.icon")
         span {{item.label}}
     cube-button.exit-btn(
       :light="true"
       @click="logout") 退出登录
+router-view(v-else)
 </template>
 
 <script>
@@ -35,7 +41,8 @@ export default {
         },
         {
           label: '收货地址',
-          icon: 'address'
+          icon: 'address',
+          path: '/profile/address'
         }
       ],
       systemmenu: [
@@ -51,7 +58,10 @@ export default {
     }
   },
   computed: {
-    ...mapState(['userinfo'])
+    ...mapState(['userinfo']),
+    hasChildRoute () {
+      return this.$route.path !== '/profile'
+    }
   },
   methods: {
     logout () {
@@ -59,7 +69,7 @@ export default {
         type: 'confirm',
         icon: 'cubeic-alert',
         title: '提示',
-        content: '是否退出登录状态',
+        content: '退出登录状态',
         confirmBtn: {
           text: '确定',
           active: true,
@@ -76,7 +86,15 @@ export default {
           this.$store.dispatch('logout')
         }
       }).show()
+    },
+    changePath (path) {
+      console.log('path', path)
+      if (!path) return
+      this.$router.push(path)
     }
+  },
+  mounted () {
+    console.log('route', this.$route, this.$route.fullPath === '/profile')
   }
 }
 </script>
