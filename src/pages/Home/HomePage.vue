@@ -1,13 +1,29 @@
 <template lang='pug'>
-HomePage(v-if="$route.path==='/home'")
-router-view(v-else)
+.msite-wrap
+  .msite-content(ref="content" @scroll='initHeight')
+    .search-wrap
+      .header-wrap
+        h5.header_title_text 零零购超市
+      .search-bar(
+        ref='searchBar')
+        i.iconfont.icon-search
+        span 输入商家或商品
+    .search-wrap.to-top(v-if="isFixed")
+      .search-bar(
+        ref='searchBar')
+        i.iconfont.icon-search
+        span 输入商家或商品
+    CategoryList.category-list
+    ShopList(
+      title="-推荐商家-"
+      :shops="shops")
 </template>
 
 <script>
 import HeaderTop from './HeaderTop'
-import HomePage from './HomePage'
 import CategoryList from './CategoryList'
 import ShopList from './ShopList'
+import {mapState, mapActions} from 'vuex'
 /**
  * @name 主页 */
 export default {
@@ -15,12 +31,33 @@ export default {
   components: {
     HeaderTop,
     CategoryList,
-    ShopList,
-    HomePage
+    ShopList
   },
   data () {
     return {
+      offsetTop: 0,
+      isFixed: false
     }
+  },
+  computed: {
+    ...mapState(['shops'])
+  },
+  methods: {
+    ...mapActions(['getShops']),
+    initHeight (e) {
+      var scrollTop = this.$refs.content.scrollTop
+      this.isFixed = scrollTop > this.offsetTop
+      // console.log('定位', scrollTop)
+    }
+  },
+  mounted () {
+    this.getShops()
+    this.$nextTick(() => {
+      this.offsetTop = this.$refs.searchBar.offsetTop
+    })
+  },
+  destroyed () {
+    // window.removeEventListener('scroll', this.initHeight)
   }
 }
 </script>

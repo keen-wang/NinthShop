@@ -7,7 +7,10 @@ cube-slide.category-wrap(
   cube-slide-item(
     v-for='(group, index) in shoptypeGroups'
     :key='index')
-    .category-item(v-for="item in group" :key="item.id")
+    .category-item(
+      v-for="item in group"
+      :key="item.id"
+      @click="showCategory(item)")
       img.item-img(:src="item.imgsrc")
       .item-name {{item.name}}
 </template>
@@ -36,7 +39,16 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['getShopTypes'])
+    ...mapActions(['getShopTypes']),
+    showCategory (info) {
+      this.$router.push({
+        path: `/home/category`,
+        query: {
+          id: info.id,
+          name: info.name
+        }
+      })
+    }
   },
   mounted () {
     this.getShopTypes()

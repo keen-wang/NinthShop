@@ -1,6 +1,6 @@
 <template lang='pug'>
 .shoplist-wrap
-  .shop-title -推荐商家-
+  .shop-title(v-if="title") {{title}}
   .shop-info(v-for="item in shopList")
     img.shop-head(:src="item.imgsrc")
     .shop-content
@@ -22,16 +22,21 @@
 /**
  * @name ShopList
  */
-import {mapState, mapActions} from 'vuex'
 export default {
   name: 'ShopList',
+  props: {
+    title: String,
+    shops: {
+      type: Array,
+      default: () => ([])
+    }
+  },
   data () {
     return {
       stars: []
     }
   },
   computed: {
-    ...mapState(['shops']),
     shopList () {
       return this.shops.map(item => {
         return {
@@ -42,7 +47,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['getShops']),
     getStarNum: (num) => {
       let arr = []
       arr[0] = parseInt(num)
@@ -53,7 +57,6 @@ export default {
   },
   mounted () {
     this.stars = this.getStarNum(3.5)
-    this.getShops()
   }
 }
 </script>

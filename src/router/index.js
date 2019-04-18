@@ -8,6 +8,7 @@ import Order from '../pages/Order'
 import Profile from '../pages/Profile'
 import Login from '../pages/Login'
 import AddressManager from '../pages/Profile/AddressManager'
+import Category from '../pages/Home/Category'
 // 声明使用插件
 Vue.use(VueRouter)
 
@@ -16,7 +17,18 @@ export default new VueRouter({
   routes: [
     {
       path: '/home',
-      component: Home
+      component: Home,
+      children: [
+        {
+          name: 'category',
+          path: 'category',
+          component: Category
+        },
+        {
+          path: '',
+          component: Home
+        }
+      ]
     },
     {
       path: '/order',
