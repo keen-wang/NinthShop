@@ -3,7 +3,7 @@
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Msite from '../pages/Msite'
+import Home from '../pages/Home'
 import Order from '../pages/Order'
 import Profile from '../pages/Profile'
 import Login from '../pages/Login'
@@ -16,7 +16,7 @@ export default new VueRouter({
   routes: [
     {
       path: '/home',
-      component: Msite
+      component: Home
     },
     {
       path: '/order',
