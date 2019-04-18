@@ -23,7 +23,6 @@ export default {
       valid: undefined,
       model: {}, // 数据源
       schema: { // 模式用于定义表单中的各个字段，可以选择是否分组。
-
         fields: [
           {
             modelKey: 'username',

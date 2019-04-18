@@ -56,6 +56,7 @@ export function fetch (props) {
         showPopup(response.data.data.map(item => {
           return `${item.code}:${item.message}`
         }).join('\n\r'), 'error')
+        window.loacal.reload()
         return false
       } else {
         throw Object({

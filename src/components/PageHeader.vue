@@ -2,7 +2,7 @@
 .page-header
   .tittle {{title||'-'}}
   .left.iconfont.icon-left(@click="goBack")
-  .right
+  slot.right(name='right')
 </template>
 
 <script>
