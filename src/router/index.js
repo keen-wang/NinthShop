@@ -9,6 +9,7 @@ import Profile from '../pages/Profile'
 import Login from '../pages/Login'
 import AddressManager from '../pages/Profile/AddressManager'
 import Category from '../pages/Home/Category'
+import ShopInfo from '../pages/Home/ShopInfo'
 // 声明使用插件
 Vue.use(VueRouter)
 
@@ -47,6 +48,10 @@ export default new VueRouter({
           component: Profile
         }
       ]
+    },
+    {
+      path: '/shop',
+      component: ShopInfo
     },
     {
       path: '/login',
