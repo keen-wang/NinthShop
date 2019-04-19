@@ -23,7 +23,7 @@
             .goods-name {{good.name}}
             .goods-desc {{good.summary}}
             .goods-sales {{`月售${good.sales}份 好评率${good.praiserate}% `}}
-            .goods-price ￥{{good.price}}
+            .goods-price ￥{{good.price.toFixed(2)}}
 </template>
 
 <script>
@@ -123,6 +123,10 @@ const goods = [
       .goods-desc,.goods-sales,.goods-price
         font-size: 3vw
         padding: 4px
+        color: #787878
+      .goods-price
+        font-size: 4vw
+        color: #ff5339
 /deep/.scroll-nav
   .cube-scroll-nav-bar-item_active
     background-color: #fff
