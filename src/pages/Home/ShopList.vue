@@ -1,7 +1,10 @@
 <template lang='pug'>
 .shoplist-wrap
   .shop-title(v-if="title") {{title}}
-  .shop-info(v-for="item in shopList")
+  .shop-info(
+    v-for="item in shopList"
+    :key='"shop"+item.id'
+    @click="showShopPage(item)")
     img.shop-head(:src="item.imgsrc")
     .shop-content
       .shop-name {{item.name}}
@@ -53,6 +56,16 @@ export default {
       arr[1] = num % 1 ? 1 : 0
       arr[2] = 5 - arr[0] - arr[1]
       return arr
+    },
+    showShopPage (shop) {
+      console.log('打开店铺', shop)
+      if (!shop) return
+      this.$router.push({
+        path: '/shop',
+        query: {
+          shopId: shop.id
+        }
+      })
     }
   },
   mounted () {

@@ -6,6 +6,7 @@
     .shop-name {{shopInfo.name}}
     .shop-detail {{`评分${shopInfo.grade}   月售${shopInfo.sales}单  配送时长约${shopInfo.duration}分钟`}}
     .shop-intro {{shopInfo.summary}}
+  .iconfont.icon-left(@click="goBack")
 </template>
 
 <script>
@@ -15,11 +16,17 @@
 export default {
   name: 'ShopHeader',
   props: {
-    shopId: Number
+    shopId: Number | String
   },
   data () {
     return {
       shopInfo: {}
+    }
+  },
+  methods: {
+    goBack () {
+      if (!this.path) this.$router.go(-1)
+      else this.$router.push(this.path)
     }
   },
   mounted () {
@@ -33,6 +40,7 @@ export default {
       }).then(res => {
         if (!res) return
         this.shopInfo = res
+        this.$emit('getShopInfo', res)
       })
     }
   }
@@ -71,4 +79,10 @@ export default {
       font-size: 3.4vw
       padding: 0 20px
       color: #999
+  .icon-left
+    font-size: 5vw
+    color: #fff
+    position: absolute
+    top: 10px
+    left: 10px
 </style>
