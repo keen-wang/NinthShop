@@ -14,7 +14,8 @@
     CartList(
       :cartList="cartList"
       @addGoods="addGoods"
-      @subGoods="subGoods")
+      @subGoods="subGoods"
+      @clearCart="clearCart")
   cube-scroll-nav.scroll-nav(
     :side='true'
     :data='goodsOfCategory'
@@ -175,6 +176,9 @@ export default {
       } else {
         this.cartList[goodsIndex].quantity--
       }
+    },
+    clearCart () {
+      this.cartList = []
     },
     showCartList (isShow) {
       if (isShow) this.$refs.cartList.show()

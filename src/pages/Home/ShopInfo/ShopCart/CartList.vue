@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     clearCart () {
-
+      this.$emit('clearCart')
     },
     addGoods (goods) {
       this.$emit('addGoods', goods)
