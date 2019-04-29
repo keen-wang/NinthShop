@@ -10,7 +10,7 @@
 /**
  * @name Category
  */
-import ShopList from './ShopList'
+import ShopList from './HomePage/ShopList'
 import PageHeader from '@/components/PageHeader'
 export default {
   name: 'Category',

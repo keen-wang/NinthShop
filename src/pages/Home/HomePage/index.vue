@@ -20,7 +20,6 @@
 </template>
 
 <script>
-import HeaderTop from './HeaderTop'
 import CategoryList from './CategoryList'
 import ShopList from './ShopList'
 import {mapState, mapActions} from 'vuex'
@@ -29,7 +28,6 @@ import {mapState, mapActions} from 'vuex'
 export default {
   name: 'Msite',
   components: {
-    HeaderTop,
     CategoryList,
     ShopList
   },

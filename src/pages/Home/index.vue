@@ -4,18 +4,12 @@ router-view(v-else)
 </template>
 
 <script>
-import HeaderTop from './HeaderTop'
 import HomePage from './HomePage'
-import CategoryList from './CategoryList'
-import ShopList from './ShopList'
 /**
  * @name 主页 */
 export default {
   name: 'Msite',
   components: {
-    HeaderTop,
-    CategoryList,
-    ShopList,
     HomePage
   },
   data () {
