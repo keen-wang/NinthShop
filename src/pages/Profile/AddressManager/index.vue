@@ -3,7 +3,7 @@
   PageHeader(title='收货地址管理')
   .address-list
     AddressInfo(
-      v-for="item in addressList"
+      v-for="item in addresslist"
       :key="item.id"
       :addressInfo="item"
       @showEditForm="showEditForm(item)"
@@ -24,6 +24,7 @@
 /**
 @name 地址管理列表
  */
+import {mapState, mapActions} from 'vuex'
 import PageHeader from '@/components/PageHeader'
 import EditForm from './EditForm'
 import AddressInfo from './AddressInfo'
@@ -41,27 +42,24 @@ export default {
         name: 'laowang'
       },
       formTitle: '',
-      isCreate: true,
-      addressList: []
+      isCreate: true
+      // addressList: []
     }
   },
+  computed: {
+    ...mapState(['addresslist'])
+  },
   methods: {
-    getAddressList () {
-      const toast = this.$createToast({
-        txt: '疯狂加载中...',
-        time: 0,
-        mask: true
-      })
-      toast.show()
-      this.$get({
-        url: `/address`
-      }).then(res => {
-        toast.hide()
-        if (!res) return
-        this.addressList = res.addressList
-        console.log(this.addressList)
-      })
-    },
+    ...mapActions(['getAddresslist']),
+    // getAddressList () {
+    //   this.$get({
+    //     url: `/address`
+    //   }).then(res => {
+    //     if (!res) return
+    //     this.addressList = res.addressList
+    //     console.log(this.addressList)
+    //   })
+    // },
     showEditForm (addressInfo) {
       if (!addressInfo) {
         console.log('addressInfo', addressInfo)
@@ -77,7 +75,7 @@ export default {
     },
     hideEditForm () {
       this.$refs.editForm.hide()
-      this.getAddressList()
+      this.getAddresslist()
     },
     deleteAddress (info) {
       console.log('删除地址信息', info)
@@ -90,13 +88,13 @@ export default {
         }).then(res => {
           if (!res) return
           showPopup('删除成功', 'success')
-          this.getAddressList()
+          this.getAddresslist()
         })
       }
     }
   },
   mounted () {
-    this.getAddressList()
+    this.getAddresslist()
   }
 
 }

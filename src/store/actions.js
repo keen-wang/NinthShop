@@ -3,12 +3,14 @@
  */
 import {
   RECEIVE_ADDRESS,
+  RECEIVE_ADDRESSLIST,
   RECEIVE_SHOPTYPES,
   RECEIVE_SHOPS,
   RECEIVE_USERINFO,
   RESET_USERINFO
 } from './mutation-types'
 import { httpGet } from '../api'
+import { Toast } from 'cube-ui'
 
 export default{
   recordUser ({commit, state}, userinfo) {
@@ -34,8 +36,31 @@ export default{
   },
   getAddress ({commit, state}) {
     // const geahash = state.latitudu + ',' + state.longitude
-    const address = '蜜汁地址'
+    let address = {}
+    if (state.addresslist.length !== 0) {
+      address = state.addresslist[0]
+    }
     commit(RECEIVE_ADDRESS, {address})
+  },
+  async getAddresslist ({commit, state}) {
+    const toast = Toast.$create({
+      txt: '疯狂加载中...',
+      time: 0,
+      mask: true
+    })
+    toast.show()
+    await httpGet({
+      url: '/address'
+    }).then(res => {
+      toast.hide()
+      if (!res) return
+      console.log('shoptypes', res)
+      const addresslist = res.addressList
+      if (addresslist.length !== 0) {
+        state.address = addresslist[0]
+      }
+      commit(RECEIVE_ADDRESSLIST, {addresslist})
+    })
   },
   getShopTypes ({commit}) {
     httpGet({

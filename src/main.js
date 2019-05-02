@@ -4,10 +4,12 @@ import router from './router' // 路由组成
 import api from './api' // 接口api
 import store from './store' // vuex状态
 import Cube from 'cube-ui' // vue-cli组件库
+import moment from 'moment'
 
 Vue.use(api)
 Vue.use(Cube)
 
+Vue.prototype.$moment = moment
 Vue.config.devtools = true
 /* eslint-disable no-new */
 new Vue({

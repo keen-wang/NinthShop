@@ -21,6 +21,7 @@ export default {
   mounted () {
     this.$store.dispatch('getAddress')
     this.$store.dispatch('getUserinfo')
+    this.$store.dispatch('getAddresslist')
     // this.$store.dispatch('getShopTypes')
     // this.$store.dispatch('getShops')
   }

@@ -9,7 +9,7 @@
           .num(v-if='totalQuanlity') {{totalQuanlity}}
         .price(:class='{highlight: totalQuanlity}') ￥{{totalPrice}}
         .desc 另需配送费￥{{shopInfo.delivery_price}}元
-      .content-right
+      .content-right(@click="placeOrder")
         .pay(:class='payClass')
           | {{payText}}
 
@@ -20,6 +20,7 @@
  * @name ShopCart
  */
 import CartList from './CartList'
+import {showPopup} from '@/common/alert'
 export default {
   name: 'ShopCart',
   props: {
@@ -82,11 +83,21 @@ export default {
       this.$emit('showCartList', this.isShow)
       // console.log('isShow', this.isShow)
     },
-
-    clearCart () {
-      // MessageBox.confirm('确定清空购物车吗?').then(action => {
-      //   this.$store.dispatch('clearCart')
-      // }, () => {})
+    placeOrder () {
+      const {totalPrice} = this
+      const {startprice} = this.shopInfo
+      if (totalPrice !== 0 && totalPrice >= startprice) {
+        if (this.$store.state.userinfo.userid || this.$store.state.userinfo.userid === 0) {
+          this.$router.push({
+            path: '/checkout',
+            query: {
+              id: this.shopInfo.id
+            }
+          })
+        } else {
+          showPopup('请先登录账号再进行操作', 'warning')
+        }
+      }
     }
   },
   components: {

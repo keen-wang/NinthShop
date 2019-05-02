@@ -5,6 +5,7 @@ export default {
   latitude: 4010038,
   longtitude: 116.36867,
   address: '',
+  addresslist: [],
   shoptypes: [],
   shops: [],
   userinfo: {} // 用户信息

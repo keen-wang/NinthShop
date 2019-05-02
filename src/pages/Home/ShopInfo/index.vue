@@ -59,7 +59,7 @@ export default {
     CartList
   },
   data () {
-    let cartList = JSON.parse(window.localStorage.getItem('Cart_Map'))['shop' + this.$route.query.shopId]
+    let cartList = (JSON.parse(window.localStorage.getItem('Cart_Map')) || {})['shop' + this.$route.query.shopId]
     console.log('cartlist', cartList)
     return {
       shopId: this.$route.query.shopId || null,
@@ -93,7 +93,7 @@ export default {
     cartList: {
       deep: true,
       handler (val) {
-        let cartList = JSON.parse(window.localStorage.getItem('Cart_Map'))
+        let cartList = JSON.parse(window.localStorage.getItem('Cart_Map')) || {}
         const key = 'shop' + this.shopId
         const newCartList = {
           ...cartList,
@@ -156,9 +156,7 @@ export default {
       } else {
         // 第一次加入购物车
         this.cartList.push({
-          id: goodsInfo.id,
-          name: goodsInfo.name,
-          price: goodsInfo.price,
+          ...goodsInfo,
           quantity: 1
         })
       }
@@ -187,12 +185,6 @@ export default {
   },
   mounted () {
     this.getGoodsAndCategory()
-    // this.getGoodsAndCategory().then(() => {
-    //   this.$nextTick(() => {
-    //     console.log('goodsOfCategory', this.goodsOfCategory, this.goodsList)
-    //     this.current = this.goodsOfCategory[0].name
-    //   })
-    // })
   }
 }
 // const goods = []

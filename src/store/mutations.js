@@ -4,6 +4,7 @@
 import {
   RECEIVE_ADDRESS,
   RECEIVE_SHOPTYPES,
+  RECEIVE_ADDRESSLIST,
   RECEIVE_SHOPS,
   RECEIVE_USERINFO,
   RESET_USERINFO
@@ -18,6 +19,9 @@ export default {
   },
   [RECEIVE_ADDRESS] (state, {address}) {
     state.address = address
+  },
+  [RECEIVE_ADDRESSLIST] (state, {addresslist}) {
+    state.addresslist = addresslist
   },
   [RECEIVE_SHOPTYPES] (state, {shoptypes}) {
     state.shoptypes = shoptypes
