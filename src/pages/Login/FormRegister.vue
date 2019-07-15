@@ -61,6 +61,17 @@ export default {
             }
           },
           {
+            modelKey: 'tell',
+            type: 'input',
+            label: '手机号',
+            props: {
+              placeholder: '请输入'
+            },
+            rules: {
+              required: true
+            }
+          },
+          {
             type: 'submit',
             label: '注册'
           },
@@ -90,6 +101,7 @@ export default {
         data: {
           username: this.model.username,
           password: this.model.password,
+          tell: this.model.tell,
           type: 'user'
         }
       }).then(data => {

@@ -1,7 +1,7 @@
 <template lang='pug'>
 .profile-wrap(v-if="!hasChildRoute")
   ProfileHeader(:userinfo='userinfo')
-  .menu-wrap(v-if="userinfo.username")
+  .menu-wrap(v-if="userinfo&&userinfo.username")
     ul.menu-list
       li.menu-item(
         v-for="item in usermenu"

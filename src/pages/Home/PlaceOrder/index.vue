@@ -12,7 +12,7 @@
         span.user-phone {{address.tell}}
       i.iconfont.icon-right
     .order-detail
-      .shop-name {{'肯德基'}}
+      .shop-name {{shopInfo.name}}
       .cart-list
         .cart-item(v-for="item in cartList")
           img.goods-img(src="item.imgsrc")
@@ -74,12 +74,12 @@ export default {
         url: `/orderinfo/insert`,
         data: {
           date,
-          shopId: 1,
-          userId: 1,
+          shopId: this.shopInfo.id,
           addressId: this.address.id,
           orderGoods: this.cartList.map(item => ({
             goodsId: item.id,
-            quantity: item.quantity
+            quantity: item.quantity,
+            price: item.price
           }))
         }
       }).then((res) => {
@@ -91,6 +91,7 @@ export default {
               path: '/order'
             })
           }, 1000)
+          this.$store.dispatch('getUserinfo')
         }
       })
     },

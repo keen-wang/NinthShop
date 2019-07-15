@@ -99,7 +99,7 @@ export default {
           ...cartList,
           [key]: val
         }
-        console.log('修改购物车', newCartList)
+        // console.log('修改购物车', newCartList)
         window.localStorage.setItem('Cart_Map', JSON.stringify(newCartList))
       }
     }

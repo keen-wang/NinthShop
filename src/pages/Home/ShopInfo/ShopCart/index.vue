@@ -12,7 +12,6 @@
       .content-right(@click="placeOrder")
         .pay(:class='payClass')
           | {{payText}}
-
 </template>
 
 <script>

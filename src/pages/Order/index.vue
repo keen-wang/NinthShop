@@ -1,41 +1,39 @@
 <template lang='pug'>
 .order-wrap
-  .head
-    .head_left
-      a.glyphicon.glyphicon-menu-left(href='##')
-    h1.text-center 订单
+  PageHeader.page-header(title='订单')
   .orderbody
     // 订单卡片
-    .ordercard(href='#', class='.container-fluid', v-for='item in 3')
-      .ordercard-body.row
-        a.ordercard-left.col-xs-2(href='#')
-          img.img-rounded(src="https://fuss10.elemecdn.com/7/d8/a867c870b22bc74c87c348b75528djpeg.jpeg?imageMogr/format/webp/thumbnail/!90x90r/gravity/Center/crop/90x90/")
-        .ordercard-right
-          .ordercard-head
-            .ordercard-title
-              a(href='#') 商店名
-              span.glyphicon.glyphicon-menu-right
-              p.status(ng-hide='item.status!=1') 正在处理订单
-              p.status(ng-hide='item.status!=2') 订单已送达
-              p.status(ng-hide='item.status!=3') 订单已取消
-              p.datetime 2019-11-10
-          .ordergoodslist
-            // 订单商品
-            .ordercard-detail(v-for='goods in 10')
-              span.detail
-                span.goodsname 商品名
-                |                             ×
-                span(clas5s='count') 商品数量
-              span.price 100
-            .ordercard-detail
-              span.detail
-                span.goodsname 总价：
-              span.price 200
-        .col-xs-12.ordercard-bottom.container
-          .row
-            button.btn.btn-info.col-xs-3.col-xs-offset-5 再来一单
-            button.btn.btn-warning.col-xs-3(v-if='item.status==1', ng-click='confirmOrder(item.id)') 确认送达
-            button.btn.btn-success.col-xs-3(v-if='item.status==2') 评价服务
+    .ordercard(class='.container-fluid', v-for='item in orderList')
+      .ordercard-top
+        img.img-rounded(:src="item.imgsrc")
+        .ordercard-title
+          a(href='#') {{item.shopname}}
+          span.glyphicon.glyphicon-menu-right
+          p.status {{item.status|statusMap}}
+          p.datetime {{$moment(item.date).format('YYYY-MM-DD HH:mm:ss')}}
+      .ordercard-content
+        .ordergoodslist
+          // 订单商品
+          .ordercard-detail(v-for='goods in item.goodslist')
+            span.detail
+              span.goodsname {{goods.name}}
+              |                             ×
+              span(clas5s='count') {{goods.quantity}}
+            span.price {{goods.quantity*goods.price|momeny}}
+          .ordercard-detail
+            span.detail
+              span.goodsname 总价：
+            span.price {{item.goodslist|sumPrice|momeny}}
+      .ordercard-bottom
+        .button-list
+          cube-button.order-btn(
+            @click="toOrderShop(false)") 再来一单
+          cube-button.order-btn(
+            v-if='item.status==1'
+            @click="confirmOrder(item.id)") 确认送达
+          cube-button.order-btn(
+            v-if='item.status==2'
+            @click="confirmOrder(item.id)") 删除订单
   //- // 未登录提示
   //- .orderbody.text-center(v-if='!loginstatus')
   //-   .waring
@@ -46,102 +44,143 @@
 
 <script>
 /** */
+import PageHeader from '@/components/PageHeader'
 export default {
   name: '',
+  components: {
+    PageHeader
+  },
   data () {
-    return {}
+    return {
+      orderList: []
+    }
+  },
+  methods: {
+    getOrderList () {
+      this.$get({
+        url: `/orderinfo`
+      }).then(res => {
+        if (!res) return
+        console.log('订单列表', res)
+        this.orderList = res
+      })
+    },
+    toOrderShop () {
+
+    },
+    confirmOrder (id) {
+      this.$createDialog({
+        type: 'confirm',
+        icon: 'cubeic-alert',
+        title: '提示',
+        content: '确认收货',
+        confirmBtn: {
+          text: '确定',
+          active: true,
+          disabled: false,
+          href: 'javascript:;'
+        },
+        cancelBtn: {
+          text: '取消',
+          active: false,
+          disabled: false,
+          href: 'javascript:;'
+        },
+        onConfirm: () => {
+          this.$get({
+            url: `/orderinfo/update`,
+            params: {
+              id,
+              status: 2
+            }
+          }).then(res => {
+            if (!res) return
+            this.getOrderList()
+          })
+        }
+      }).show()
+    }
+  },
+  filters: {
+    sumPrice (goodslist) {
+      return goodslist.reduce((result, item, index) => {
+        return result + item.quantity * item.price
+      }, 0)
+    },
+    momeny (val) {
+      return val ? '￥' + val.toFixed(2) : '-'
+    },
+    statusMap (val) {
+      let statusList = ['订单已取消', '正在处理订单', '订单已完成']
+      return statusList[val]
+    }
+  },
+  mounted () {
+    this.getOrderList()
   }
 }
 </script>
 
 <style lang='sass' scoped>
-.head
-  width: 100%
-  height: 1.173333rem
-  height: 11.733333vw
-  background-image: linear-gradient(90deg,#0af,#0085ff)
-  line-height: 1.173333rem
-  line-height: 11.733333vw
-  position: fixed
-  top: 0
-  left: 0
-  z-index: 1000
-  .head_left
-    width: 1.173333rem
-    width: 11.733333vw
-    height: 1.173333rem
-    height: 11.733333vw
-    color: #fff
-    font-size: 1em
-    text-align: center
-    line-height: 11.733333vw
-    position: absolute
-    left: 0
-    top: 0
-  h1
-    color:#fff
-    font-weight: 600
-    font-size: 6vw
-    margin: 0
-    position: absolute
-    left: 50%
-    top: 2vw
-    transform: translateX(-50%)
 .order-wrap
   font-size: 24px
   background-color: #f5f5f5
-//订单列表
-.orderbody
-  width: 100%
-  overflow: hidden
-  padding-top: 11.733333vw
-  padding-bottom: 2.173333rem
-  padding-bottom: 16.733333vw
-  //订单卡片
-  .ordercard
+  .page-header
+    position: fixed
+    top: 0
+    left: 0
+    z-index: 10
+  //订单列表
+  .orderbody
     width: 100%
-    margin-top: 3vw
-    height: 100%
-    .ordercard-body
-      display: block
+    overflow: hidden
+    padding-top: 11.733333vw
+    padding-bottom: 16.733333vw
+    padding-left: 10px
+    padding-right: 10px
+    box-sizing: border-box
+    //订单卡片
+    .ordercard
+      width: 100%
+      margin-top: 3vw
       height: 100%
       background-color: #fff
-      .ordercard-left
-        display: block
-        height: 30vw
-        padding-left: 5vw
+      border-radius: 5px
+      box-shadow: 0px 0px 10px #dfdfdf
+      .ordercard-top
+        height: 15vw
+        background-color: #c8e7c9
+        overflow: hidden
+        padding: 0 15px
         img
-          width: 100%
+          width: 11vw
           height: 11vw
-          margin-top: 4vw
-      .ordercard-right
-        height: 100%
-        border-bottom: 1px solid #eee
-        .ordercard-head
-          width: 100%
-          height: 16vw
           margin-top: 2vw
+          float: left
+          margin-right: 10px
+        .ordercard-title
+          font-size: 5vw
+          width: calc(100% - 60px)
+          float: left
           position: relative
-          border-bottom: 1px solid #eee
-          .ordercard-title
-            font-size: 5vw
-            width: 70%
-            a
-              color: #000
-              line-height: 11vw
-            span
-              margin-left: 5vw
-              font-size: 1vw
-            .status
-              font-size: 3vw
-              position: absolute
-              top: 4vw
-              left: 52vw
-            .datetime
-              font-size: 3vw
-              color: #999
+          a
+            color: #000
+            line-height: 11vw
+          span
+            margin-left: 5vw
+            font-size: 1vw
+          .status
+            font-size: 3vw
+            position: absolute
+            top: 4vw
+            right: 0
+          .datetime
+            font-size: 3vw
+            color: #999
+      .ordercard-content
         .ordergoodslist
           height: 100%
+          padding: 0 16vw
           .ordercard-detail
             width: 100%
             height: 9vw
@@ -151,33 +190,47 @@ export default {
             .detail
               font-size: 3vw
               color: #808080
+              margin-top: 1vw
+              float: left
             .price
               font-size: 3vw
               color: #111111
               float: right
               margin-top: 1vw
-              margin-right: 9vw
+        .ordercard-right
+          flex: 8
+          height: 100%
+          border-bottom: 1px solid #eee
+          .ordercard-head
+            width: 100%
+            height: 16vw
+            margin-top: 2vw
+            position: relative
+            border-bottom: 1px solid #eee
       .ordercard-bottom
         height: 11vw
-        padding-top: 2vw
-        padding-right: 9vw
-        .row
-          button
-            font-size: 3vw
-            height: 8vw
-            margin-right: 3vw
-  .waring
-    width: 100%
-    height: 100vw
-    line-height: 100vw
-    color: #666
-    span
-      display: block
-    button
-      position: relative
-      top: -81vw
-      font-size: 5vw
-      width: 34vw
-      height: 15vw
+        padding-right: 5vw
+        .button-list
+          float: right
+        .order-btn
+          width: 24vw
+          font-size: 3vw
+          height: 8vw
+          margin-right: 3vw
+          display: inline-block
+          padding: 5px
+    .waring
+      width: 100%
+      height: 100vw
+      line-height: 100vw
+      color: #666
+      span
+        display: block
+      button
+        position: relative
+        top: -81vw
+        font-size: 5vw
+        width: 34vw
+        height: 15vw
 
 </style>
